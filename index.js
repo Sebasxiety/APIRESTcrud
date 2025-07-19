@@ -20,11 +20,18 @@ app.use('/api/sesiones', require('./routes/sesiones'));
 
 const start = async () => {
   try {
-    await db.sequelize.sync();
+    // 1. Autenticación
+    await db.sequelize.authenticate();
+    console.log('Conectado a PostgreSQL');
+
+    // 2. Sync con alter para crear/ajustar tablas
+    await db.sequelize.sync({ alter: true });
+    console.log('Tablas sincronizadas');
+
     const port = process.env.PORT || 3000;
     app.listen(port, () => console.log(`Server running on port ${port}`));
   } catch (err) {
-    console.error('Unable to connect to database', err);
+    console.error('Error al inicializar la BD:', err);
   }
 };
 

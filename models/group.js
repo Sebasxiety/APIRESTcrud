@@ -1,8 +1,22 @@
-const { DataTypes } = require('sequelize');
-const db = require('./index');
-
-const Group = db.sequelize.define('Group', {
-  name: { type: DataTypes.STRING, allowNull: false, unique: true }
-});
-
-module.exports = Group;
+// models/group.js
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('Group', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
+  }, {
+    tableName: 'groups',
+    timestamps: true
+  });
+};
